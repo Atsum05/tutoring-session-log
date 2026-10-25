@@ -2,26 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  body {
+    @apply min-h-screen bg-paper font-sans text-ink antialiased;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  ::selection {
+    @apply bg-margin/20;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-margin;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .ink-link {
+    background-image:
+      linear-gradient(theme('colors.margin'), theme('colors.margin')),
+      linear-gradient(theme('colors.rule'), theme('colors.rule'));
+    background-size: 0% 1px, 100% 1px;
+    background-position: 0 100%, 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-size 350ms ease, color 200ms ease;
+  }
+
+  .ink-link:hover,
+  .ink-link:focus-visible {
+    background-size: 100% 1px, 100% 1px;
+    color: theme('colors.margin');
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
