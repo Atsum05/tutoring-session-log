@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -25,7 +23,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# local env files
+# environment
+.env
 .env*.local
 
 # vercel
@@ -35,22 +34,15 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-prisma/dev.db
+# database and generated code
+*.db
+*.db-journal
+/src/generated
 
-# for pdf essentially
+# task statement
 *.pdf
 
-/src/generated/prisma
-
-*.db
-*.db-journal
-.env
-
-.env
-/src/generated
-*.db
-*.db-journal
-Tarea_Tecnica_CA.pdf
+# AI agent files
 .agents
 .claude
 .windsurf
