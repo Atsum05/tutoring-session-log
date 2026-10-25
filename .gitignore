@@ -39,3 +39,19 @@ prisma/dev.db
 
 # for pdf essentially
 *.pdf
+
+/src/generated/prisma
+
+*.db
+*.db-journal
+.env
+
+.env
+/src/generated
+*.db
+*.db-journal
+Tarea_Tecnica_CA.pdf
+.agents
+.claude
+.windsurf
+skills-lock.json
