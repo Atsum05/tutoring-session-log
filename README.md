@@ -36,6 +36,12 @@ La aplicación queda en http://localhost:3000. No hace falta crear un `.env`: la
 
 `npm test` ejecuta 5 tests (11 casos, porque algunos usan `it.each`) sobre el esquema de validación de Zod: sesión válida, límites de duración (15 y 180 se aceptan; 14 y 181 no), duraciones no enteras o vacías, fechas inexistentes o mal formadas, y límite de 500 caracteres en las notas.
 
+## Flujo de trabajo
+
+- **Ramas (gitflow simplificado):** `main` contiene la versión entregada y `develop` la integración. Cada cambio se hizo en una rama `feat/*`, `ci/*` o `docs/*` y se fusionó en `develop` con `--no-ff`, mediante merges locales y pull requests.
+- **Commits:** en su mayoría siguen [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `test:`, `ci:`, `docs:`, `chore:`).
+- **CI (GitHub Actions):** en cada push y pull request a `main` o `develop` se ejecutan lint, type-check, tests, migración, seed y build, en una máquina limpia. Son los mismos pasos de "Puesta en marcha", así que sirven de comprobación de que el README funciona.
+
 ## Decisiones
 
 La fecha se guarda como texto `YYYY-MM-DD` (campo `String`): es una fecha de calendario y no un instante, así que se evitan desfases por zona horaria, SQLite no tiene un tipo de fecha nativo y el texto ISO ordena cronológicamente. Las notas vacías o en blanco se guardan como `null`. La duración llega del formulario como texto y se valida con una expresión regular de solo dígitos antes de convertirla a número, de modo que `30.5`, `abc` o un campo vacío fallen con un mensaje claro. El esquema de datos está en `prisma/schema.prisma` y la migración inicial en `prisma/migrations`. La URL de la base tiene un valor por defecto (`file:./prisma/dev.db`) para que el proyecto funcione sin `.env`, y el cliente generado de Prisma (`src/generated`) no se versiona: se crea con `postinstall`. Un id de estudiante no numérico o inexistente responde 404, y las sesiones se ordenan por fecha descendente y, en caso de empate, por id descendente. Se usó Next.js 16 y Prisma 7 en lugar de Next.js 14 porque se indicó que las versiones posteriores eran válidas. La lista muestra las fechas como `dd/mm/aaaa`; el campo del formulario usa el selector nativo del navegador, que muestra el formato según el idioma del navegador y siempre envía `YYYY-MM-DD`.
@@ -75,6 +81,12 @@ The app runs at http://localhost:3000. No `.env` file is needed: the database is
 ### Tests
 
 `npm test` runs 5 tests (11 cases, since some use `it.each`) against the Zod validation schema: a valid session, duration limits (15 and 180 are accepted; 14 and 181 are not), non-integer or empty durations, nonexistent or malformed dates, and the 500-character limit on notes.
+
+### Workflow
+
+- **Branches (simplified gitflow):** `main` holds the delivered version and `develop` is the integration branch. Every change was made on a `feat/*`, `ci/*` or `docs/*` branch and merged into `develop` with `--no-ff`, through local merges and pull requests.
+- **Commits:** mostly follow [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `test:`, `ci:`, `docs:`, `chore:`).
+- **CI (GitHub Actions):** on every push and pull request to `main` or `develop`, it runs lint, type-check, tests, migration, seed and build on a clean machine. These are the same steps as "Getting started", so they double as a check that the README works.
 
 ### Decisions
 
