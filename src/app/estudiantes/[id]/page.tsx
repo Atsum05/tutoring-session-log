@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SessionForm } from "@/components/session-form";
 import { SessionsList } from "@/components/sessions-list";
 import { prisma } from "@/lib/prisma";
+import { createSession } from "./actions";
 
 type StudentPageProps = {
   params: Promise<{ id: string }>;
@@ -26,6 +28,8 @@ export default async function StudentPage({ params }: StudentPageProps) {
     notFound();
   }
 
+  const action = createSession.bind(null, student.id);
+
   return (
     <main>
       <Link
@@ -46,6 +50,7 @@ export default async function StudentPage({ params }: StudentPageProps) {
       </header>
 
       <SessionsList sessions={student.sessions} />
+      <SessionForm action={action} />
     </main>
   );
 }
