@@ -20,6 +20,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npx tsc --noEmit
+      - run: npm test
       - run: npx prisma migrate deploy
       - run: npx prisma db seed
       - run: npm run build
